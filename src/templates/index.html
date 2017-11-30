@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block css_file %}
+<link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<div class="homenav">
+<span class="nav" style="display: none">
+<a class='current' onclick='return false;'>1</a>
+<a href=''>2</a>
+<a href=''>3</a></span>
+</div>
+
+<h1 class="home_logo"><img src="{{url_for('static',filename='images/logo.png')}}" alt="西哈搜索" onclick="location.reload()" style="cursor: pointer"/></h1>
+<div class="searchbox">
+    <form action="{{ url_for('search') }}" method="get" onsubmit="return subck();">
+    <input align="middle" name="q" class="q" id="kw" autocomplete="off" baiduSug="1" onfocus="javascript:if(this.value==''){this.value='';this.style.borderColor='#00a9f6';}" onblur="javascript:if(this.value==''){this.value='';this.style.borderColor='#CFC7C7';}" x-webkit-speech />
+    <input id="btn" class="btn" align="middle" value="搜索一下" type="submit" style="cursor: pointer"/>
+    </form>
+</div>
+<div class="hotsearchs">
+    {% for s in stock_list %}
+        <a href="{{ url_for('search',q=s.name)}}">{{s.name}}</a>
+    {% endfor %}
+</div>
+<div id="card_container" style="display: block; ">
+<div class="img-card">
+
+</div>
+<div class="right-wrap">
+<div class="hotsearch">
+
+</div>
+</div></div>
+<script>
+window.onload=function(){
+if(document.readyState=="complete"){
+document.getElementById("kw").focus();}}
+</script>
+{% include 'footer.html' %}
+{% endblock %}

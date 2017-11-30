@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block css_file %}
+<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<body>
+<div id="header">
+  <div class="s">
+      <a href="/" title=""><div class="logo png"></div></a>
+      <div class="searchbox">
+       <form action="{{ url_for('search') }}" method="get" onsubmit="return subck();"><input align="middle" name="q" class="q" id="kw" value="{{q}}" autocomplete="off" baiduSug="1" x-webkit-speech/>
+           <input id="btn" class="btn" align="middle" value="搜索一下" type="submit" />
+              </form>
+      </div>
+  </div>
+</div>
+
+<div id="topnav" style="">
+<span class="nav">
+		<a class='current' onclick='return false;'>全部</a>
+    {% if stock_list|length > 0 %}
+        <a href='http://guba.eastmoney.com/list,{{stock_list[0].stock_no}}.html' target="_blank">股吧</a>
+		<a href='http://news.baidu.com/ns?word={{stock_list[0].name}}' target="_blank">新闻</a>
+    {% else %}
+        <a href='http://www.baidu.com/s?wd={{q}}' target="_blank">网页搜索</a>
+		<a href='http://news.baidu.com/ns?word={{q}}' target="_blank">新闻</a>
+    {% endif %}
+  </span></div>
+
+<!-- google_ad_section_start -->
+<div id="p_main">
+<div id="con" class="con">
+<div id="contentinfo">关于 <h1>{{q}}</h1> 的资源:</div>
+    <div id="content">
+        <div class="cl11"></div>
+        {% for s in stock_list %}
+        <div class="pss">
+            <h2>
+                <a href="http://www.baidu.com/s?wd={{s.stock_no}}" target="_blank" rel="nofollow" id="{{s.stock_no}}">【<strong>{{s.date}}</strong>】股票代码：<strong>{{s.stock_no}}</strong>,{{s.name}},最新价：
+                    {% if s.up_down_rate < 0 %}
+                    <b>{{s.price}}</b>
+                    {% else %}
+                    <strong>{{s.price}}</strong>
+                    {% endif %}
+
+                </a>
+            </h2>
+            <div class="des">股票代码：{{s.stock_no}},{{s.name}},
+                {% if s.up_down_rate < 0 %}
+                涨幅：<b>{{s.up_down_rate}}%</b>,
+                涨跌：<b>{{s.up_down_price}}元</b>,
+                {% else %}
+                涨幅：<strong>{{s.up_down_rate}}%</strong>,
+                涨跌：<strong>{{s.up_down_price}}元</strong>,
+                {% endif %}
+                市盈率：{{s.pe_ratio}}
+            </div>
+        </div>
+        {% else %}
+            <div>
+                <p>抱歉，没有找到您要查找的有关【<strong style="color: red">{{q}}</strong>】资源~</p>
+                <br><br>
+                <p>试试去<a href="http://www.baidu.com/s?wd={{q}}" target="_blank">网页搜索："{{q}}"</a></p>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- google_ad_section_end -->
+
+<div class="cl11"></div><div class="cl11"></div>
+    {% if stock_list|length > 0 %}
+        {{page_info|safe}}
+    {% endif %}
+</div>
+<div id="sidebar">
+<div class="cl15"></div>
+<script type="text/javascript">
+
+</script>
+<div class="cl15"></div>
+<div class="cl15"></div>
+</div>
+</div>
+
+{% include 'footer_2.html' %}
+{% endblock %}

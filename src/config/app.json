@@ -1,0 +1,13 @@
+{
+  "mysql": {
+    "host":"123.57.76.54",
+    "port":3306,
+    "user":"root",
+    "passwd":"14cf355133",
+    "db":"gupiao",
+    "charset":"utf8"
+  },
+  "site":{
+    "beian":"123484"
+  }
+}
