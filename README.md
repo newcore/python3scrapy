@@ -1,0 +1,2 @@
+# python3scrapy
+用python做的爬虫系统，使用scrapy和beautifulsoup
